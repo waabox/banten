@@ -32,54 +32,54 @@ This will create the Spring's Application Context.
 ```
 Your pom.xml
 
-Yes, we are in maven central! ( http://search.maven.org/#search%7Cga%7C1%7Ccom.avenida.banten ).
+Yes, we are in maven central! ( http://search.maven.org/#search%7Cga%7C1%7Corg.waabox.banten ).
 
 The list of deployed artifacts
 
 ```xml
 
   <dependency>
-    <groupId>com.avenida.banten</groupId>
+    <groupId>org.waabox.banten</groupId>
     <artifactId>banten-core</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>com.avenida.banten</groupId>
+    <groupId>org.waabox.banten</groupId>
     <artifactId>banten-test-support</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>com.avenida.banten</groupId>
+    <groupId>org.waabox.banten</groupId>
     <artifactId>banten-hibernate</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>com.avenida.banten</groupId>
+    <groupId>org.waabox.banten</groupId>
     <artifactId>banten-hazelcast</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>com.avenida.banten</groupId>
+    <groupId>org.waabox.banten</groupId>
     <artifactId>banten-elasticsearch</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>com.avenida.banten</groupId>
+    <groupId>org.waabox.banten</groupId>
     <artifactId>banten-camel</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>com.avenida.banten</groupId>
+    <groupId>org.waabox.banten</groupId>
     <artifactId>banten-shiro</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>com.avenida.banten</groupId>
+    <groupId>org.waabox.banten</groupId>
     <artifactId>banten-web</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>com.avenida.banten</groupId>
+    <groupId>org.waabox.banten</groupId>
     <artifactId>banten-login</artifactId>
     <version>1.0</version>
   </dependency>

@@ -3,9 +3,9 @@
 <configuration debug="false" scan="false">
 
   <property name="LOG_FILE" value="target/log/test.log"/>
-  <property name="LAUNCHER_CLASS" value="com.avenida.banten.sample.SampleLauncher"/>
+  <property name="LAUNCHER_CLASS" value="org.waabox.banten.sample.SampleLauncher"/>
 
-  <include resource="com/avenida/banten/core/logback/base.xml" />
+  <include resource="org/waabox/banten/core/logback/base.xml" />
 
   <root level="INFO">
     <appender-ref ref="FILE" />
