@@ -1,23 +1,21 @@
 package org.waabox.banten.sample.user;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import org.springframework.web.servlet.ViewResolver;
 import org.waabox.banten.sample.user.controllers.UserController;
 import org.waabox.banten.sample.user.domain.UserFactory;
 import org.waabox.banten.sample.user.domain.UserRepository;
-import org.waabox.banten.web.freemarker.FreeMarkerConfigurer;
-import org.waabox.banten.web.freemarker.FreeMarkerViewResolver;
+import org.waabox.banten.web.freemarker.FreemarkerMvc;
+import org.waabox.banten.web.freemarker.FreemarkerPaths;
 
 /** The user MVC.
  * @author waabox (waabox[at]gmail[dot]com)
  */
 @Configuration
 @EnableTransactionManagement
-public class UserMvc {
+public class UserMvc extends FreemarkerMvc {
 
   @Bean public UserController userController(
       final UserRepository repository,
@@ -25,13 +23,11 @@ public class UserMvc {
     return new UserController(repository, userFactory);
   }
 
-  @Bean public ViewResolver viewResolver() {
-    return new FreeMarkerViewResolver();
-  }
-
-  @Bean public FreeMarkerConfigurer freemarkerConfig(
-    @Value("${debugMode:false}") final boolean debugMode) {
-    return new FreeMarkerConfigurer(debugMode, "../banten-sample",
-        "classpath:org/waabox/banten/sample/user/templates");
+  /** {@inheritDoc}.*/
+  @Override
+  protected FreemarkerPaths paths() {
+    return new FreemarkerPaths(
+        "classpath:org/waabox/banten/sample/user/templates",
+        "../banten-sample");
   }
 }

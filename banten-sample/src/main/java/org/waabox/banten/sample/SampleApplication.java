@@ -4,18 +4,26 @@ import org.springframework.boot.context.embedded.jetty
   .JettyEmbeddedServletContainerFactory;
 
 import org.springframework.context.annotation.Bean;
+
 import org.waabox.banten.core.BantenApplication;
 import org.waabox.banten.core.Bootstrap;
 import org.waabox.banten.core.ConfigurationApiRegistry;
+
 import org.waabox.banten.hibernate.HibernateModule;
+
 import org.waabox.banten.login.LoginConfigurationApi;
 import org.waabox.banten.login.LoginModule;
+
 import org.waabox.banten.sample.time.TimeModule;
 import org.waabox.banten.sample.user.UserModule;
+
 import org.waabox.banten.shiro.ShiroModule;
+
 import org.waabox.banten.web.WebAppConfigurationApi;
 import org.waabox.banten.web.WebAppModule;
+
 import org.waabox.banten.web.menu.MenuModule;
+
 import org.waabox.banten.web.sitemesh.SitemeshConfigurationApi;
 import org.waabox.banten.web.sitemesh.SitemeshModule;
 
