@@ -1,16 +1,18 @@
 package org.waabox.banten.login;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.ViewResolver;
+
 import org.waabox.banten.login.application.LoginController;
 import org.waabox.banten.login.domain.CreateRolesFromContextTask;
 import org.waabox.banten.login.domain.UserRepository;
+
 import org.waabox.banten.shiro.ShiroConfigurationApi;
-import org.waabox.banten.web.freemarker.FreeMarkerConfigurer;
-import org.waabox.banten.web.freemarker.FreeMarkerViewResolver;
+
+import org.waabox.banten.web.freemarker.FreemarkerMvc;
+import org.waabox.banten.web.freemarker.FreemarkerPaths;
 
 /** Login Module MVC configuration.
  *
@@ -18,7 +20,7 @@ import org.waabox.banten.web.freemarker.FreeMarkerViewResolver;
  */
 @Configuration
 @EnableTransactionManagement
-public class LoginMvc {
+public class LoginMvc extends FreemarkerMvc {
 
   /** The login form controller.
    * @return the {@link LoginController} never null.
@@ -33,14 +35,11 @@ public class LoginMvc {
     return new CreateRolesFromContextTask(repository, api);
   }
 
-  @Bean public ViewResolver viewResolver() {
-    return new FreeMarkerViewResolver();
-  }
-
-  @Bean public FreeMarkerConfigurer freemarkerConfig(
-    @Value("${debugMode:false}") final boolean debugMode) {
-    return new FreeMarkerConfigurer(debugMode, "../banten-login",
-        "classpath:org/waabox/banten/login/templates");
+  /** {@inheritDoc}.*/
+  @Override
+  protected FreemarkerPaths paths() {
+    return new FreemarkerPaths(
+        "classpath:org/waabox/banten/login/templates", "../banten-login");
   }
 
 }
