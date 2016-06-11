@@ -90,8 +90,6 @@ public class ShiroConfiguration {
       @Value("${shiro.encryption.key}") final String encryptionKey,
       final AuthorizingRealm realm) {
 
-    BantenSession.validateKey(encryptionKey);
-
     DefaultWebSecurityManager sm = new DefaultWebSecurityManager();
     sm.setRealm(realm);
     sm.setSessionManager(new BantenWebSessionManager(encryptionKey));

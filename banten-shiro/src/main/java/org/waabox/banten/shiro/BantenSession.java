@@ -5,17 +5,19 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.*;
 
-import java.nio.charset.StandardCharsets;
-
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import javax.servlet.http.*;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.Validate;
+
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -29,14 +31,11 @@ public class BantenSession implements ValidatingSession {
   /** The class logger. */
   private final Logger log = getLogger(BantenSession.class);
 
-  /** The min key size for the encryption key, in bytes.*/
-  private static final int MIN_KEY_SIZE = 40;
-
-  /** The max key size for the encryption key, in bytes.*/
-  private static final int MAX_KEY_SIZE = 1024;
-
   /** The encryption algorithm.*/
-  private static final String ENCRYPTION_ALGORITHM = "RC4";
+  private static final String ENCRYPTION_ALGORITHM = "AES";
+
+  /** The cipher name, it's never null. */
+  private static final String CIPHER_NAME = "AES/ECB/PKCS5Padding";
 
   /** The Cookie name, it's never null.*/
   private static final String COOKIE_NAME = "bantenApplicationSession";
@@ -59,15 +58,12 @@ public class BantenSession implements ValidatingSession {
    */
   private boolean stopping = false;
 
-  /** The client secret, it's  never null.*/
-  private final byte[] secretKey;
-
   /** The {@link SecretKeySpec}, it's never null. */
   private final SecretKeySpec keySpec;
 
   /** Creates a new instance of the {@link BantenSession}.
    *
-   * @param theClientSecret the client secret, cannot be null.
+   * @param theClientSecret the client secret base 64 encoded, cannot be null.
    * @param theHost the host that originated the request.
    * @param theRequest the Servlet's request, cannot be null.
    * @param theResponse the Servlet's request, cannot be null.
@@ -78,17 +74,19 @@ public class BantenSession implements ValidatingSession {
       final HttpServletRequest theRequest,
       final HttpServletResponse theResponse) {
 
-    validateKey(theClientSecret);
-
     Validate.notNull(theRequest, "The request cannot be null");
     Validate.notNull(theResponse, "The response cannot be null");
 
     request = theRequest;
     response = theResponse;
     host = theHost;
-    secretKey = theClientSecret.getBytes(StandardCharsets.UTF_8);
 
-    keySpec = new SecretKeySpec(secretKey, ENCRYPTION_ALGORITHM);
+    byte[] decodedKey = Base64.decodeBase64(theClientSecret);
+    SecretKey originalKey = new SecretKeySpec(
+        decodedKey, 0, decodedKey.length, "AES");
+
+    keySpec = new SecretKeySpec(originalKey.getEncoded(),
+        ENCRYPTION_ALGORITHM);
 
     if (request.getCookies() != null) {
       for (Cookie cookie : this.request.getCookies()) {
@@ -97,15 +95,6 @@ public class BantenSession implements ValidatingSession {
         }
       }
     }
-  }
-
-  /** Validates the given key for the RC4 algorithm.
-   * @param key the key to validate, cannot be null.
-   */
-  public static void validateKey(final String key) {
-    Validate.notNull(key, "The key cannot be null");
-    int keySize = key.getBytes().length;
-    Validate.isTrue(keySize >= MIN_KEY_SIZE && keySize <= MAX_KEY_SIZE);
   }
 
   /** Encrypts the provided plain text and generates an encrypted string.
@@ -117,7 +106,7 @@ public class BantenSession implements ValidatingSession {
   */
   public String encrypt(final byte[] plainText) {
     try {
-      Cipher cipher = Cipher.getInstance(ENCRYPTION_ALGORITHM);
+      Cipher cipher = Cipher.getInstance(CIPHER_NAME);
       cipher.init(Cipher.ENCRYPT_MODE, keySpec);
       return new Base64(true).encodeToString(cipher.doFinal(plainText));
     } catch (Exception e) {
@@ -134,7 +123,7 @@ public class BantenSession implements ValidatingSession {
   */
   public byte[] decrypt(final String cipherText) {
     try {
-      Cipher cipher = Cipher.getInstance(ENCRYPTION_ALGORITHM);
+      Cipher cipher = Cipher.getInstance(CIPHER_NAME);
       cipher.init(Cipher.DECRYPT_MODE, keySpec);
       return cipher.doFinal(new Base64(true).decode(cipherText));
     } catch (Exception e) {
@@ -274,6 +263,14 @@ public class BantenSession implements ValidatingSession {
     if (stopping) {
       throw new InvalidSessionException("Session was stopped");
     }
+  }
+
+  public static void main(final String[] args) throws NoSuchAlgorithmException {
+ // create new key
+    SecretKey secretKey = KeyGenerator.getInstance("AES").generateKey();
+    // get base64 encoded version of the key
+    String encodedKey = Base64.encodeBase64String(secretKey.getEncoded());
+    System.out.println(encodedKey);
   }
 
 }

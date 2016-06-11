@@ -98,6 +98,11 @@
     </dependency>
 
     <dependency>
+      <groupId>javax.interceptor</groupId>
+      <artifactId>javax.interceptor-api</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.hibernate.javax.persistence</groupId>
       <artifactId>hibernate-jpa-2.1-api</artifactId>
     </dependency>
@@ -154,4 +159,3 @@
 
   <!-- vim: set ts=2 et sw=2 ai: -->
 </project>
-
