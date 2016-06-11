@@ -39,47 +39,47 @@ The list of deployed artifacts
 ```xml
 
   <dependency>
-    <groupId>org.waabox.banten</groupId>
+    <groupId>com.avenida.banten</groupId>
     <artifactId>banten-core</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>org.waabox.banten</groupId>
+    <groupId>com.avenida.banten</groupId>
     <artifactId>banten-test-support</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>org.waabox.banten</groupId>
+    <groupId>com.avenida.banten</groupId>
     <artifactId>banten-hibernate</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>org.waabox.banten</groupId>
+    <groupId>com.avenida.banten</groupId>
     <artifactId>banten-hazelcast</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>org.waabox.banten</groupId>
+    <groupId>com.avenida.banten</groupId>
     <artifactId>banten-elasticsearch</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>org.waabox.banten</groupId>
+    <groupId>com.avenida.banten</groupId>
     <artifactId>banten-camel</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>org.waabox.banten</groupId>
+    <groupId>com.avenida.banten</groupId>
     <artifactId>banten-shiro</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>org.waabox.banten</groupId>
+    <groupId>com.avenida.banten</groupId>
     <artifactId>banten-web</artifactId>
     <version>1.0</version>
   </dependency>
   <dependency>
-    <groupId>org.waabox.banten</groupId>
+    <groupId>com.avenida.banten</groupId>
     <artifactId>banten-login</artifactId>
     <version>1.0</version>
   </dependency>
