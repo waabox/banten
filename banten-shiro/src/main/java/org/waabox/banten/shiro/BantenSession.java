@@ -5,12 +5,9 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.*;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import javax.servlet.http.*;
@@ -81,12 +78,8 @@ public class BantenSession implements ValidatingSession {
     response = theResponse;
     host = theHost;
 
-    byte[] decodedKey = Base64.decodeBase64(theClientSecret);
-    SecretKey originalKey = new SecretKeySpec(
-        decodedKey, 0, decodedKey.length, "AES");
-
-    keySpec = new SecretKeySpec(originalKey.getEncoded(),
-        ENCRYPTION_ALGORITHM);
+    byte[] key = Base64.decodeBase64(theClientSecret);
+    keySpec = new SecretKeySpec(key, 0, key.length, ENCRYPTION_ALGORITHM);
 
     if (request.getCookies() != null) {
       for (Cookie cookie : this.request.getCookies()) {
@@ -263,14 +256,6 @@ public class BantenSession implements ValidatingSession {
     if (stopping) {
       throw new InvalidSessionException("Session was stopped");
     }
-  }
-
-  public static void main(final String[] args) throws NoSuchAlgorithmException {
- // create new key
-    SecretKey secretKey = KeyGenerator.getInstance("AES").generateKey();
-    // get base64 encoded version of the key
-    String encodedKey = Base64.encodeBase64String(secretKey.getEncoded());
-    System.out.println(encodedKey);
   }
 
 }
